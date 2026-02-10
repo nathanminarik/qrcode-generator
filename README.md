@@ -2,6 +2,24 @@
 
 A flexible Python utility for generating QR codes for websites and contact information. Create professional QR codes with support for both interactive and command-line interfaces.
 
+## TL;DR
+
+The fastest way to generate a QR code:
+
+```bash
+# Generate a website QR code
+python generator.py --type website --url "https://www.example.com"
+
+# Generate a contact QR code
+python generator.py --type contact --name "Alice Johnson" --phone "555-123-4567" --email "alice@example.com"
+```
+
+QR codes are automatically saved to organized directories like:
+
+```
+qr_codes/2026-02-10_131331097_website_information/qrcode_131331097.png
+```
+
 ## Features
 
 - 🌐 **Website QR Codes**: Generate QR codes that link to any URL
