@@ -2,6 +2,14 @@
 
 A flexible Python utility for generating QR codes for websites and contact information. Create professional QR codes with support for both interactive and command-line interfaces.
 
+## Features
+
+- 🌐 **Website QR Codes**: Generate QR codes that link to any URL
+- 📱 **Contact QR Codes**: Create vCard QR codes with contact information (name, phone, email, website)
+- 🎯 **Flexible Input**: Interactive mode or command-line arguments
+- ⏰ **Auto-timestamped Files**: QR codes automatically save with timestamps or custom names
+- ✅ **Well-Tested**: Comprehensive unit test suite included
+
 ## TL;DR
 
 The fastest way to generate a QR code:
@@ -19,14 +27,6 @@ QR codes are automatically saved to organized directories like:
 ```
 qr_codes/2026-02-10_131331097_website_information/qrcode_131331097.png
 ```
-
-## Features
-
-- 🌐 **Website QR Codes**: Generate QR codes that link to any URL
-- 📱 **Contact QR Codes**: Create vCard QR codes with contact information (name, phone, email, website)
-- 🎯 **Flexible Input**: Interactive mode or command-line arguments
-- ⏰ **Auto-timestamped Files**: QR codes automatically save with timestamps or custom names
-- ✅ **Well-Tested**: Comprehensive unit test suite included
 
 ## Installation
 
