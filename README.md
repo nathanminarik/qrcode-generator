@@ -38,10 +38,11 @@ qr_codes/2026-02-10_131331097_website_information/qrcode_131331097.png
 
 ### Setup
 
-1. Clone or download this repository:
+1. Clone the repository:
 
 ```bash
-cd /Users/nathanaelminarik/Projects/utils/qrcode-generator
+git clone https://github.com/nathanminarik/qrcode-generator
+cd qrcode-generator
 ```
 
 2. Install required dependencies:
