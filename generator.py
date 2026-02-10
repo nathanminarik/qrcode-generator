@@ -35,6 +35,43 @@ EMAIL:{email}"""
     return vcard
 
 
+def get_organized_output_path(qr_type: str, filename: str = None) -> str:
+    """
+    Generate an organized output path for QR codes with human-readable directory structure.
+    
+    Creates directories like: qr_codes/2026-02-10_130640123_websites/ 
+    This organizes QR codes by date, timestamp (with milliseconds), and type.
+    
+    Args:
+        qr_type: Type of QR code ('website' or 'contact')
+        filename: Optional custom filename. If not provided, generates one with timestamp.
+    
+    Returns:
+        Full file path where QR code should be saved
+    """
+    now = datetime.now()
+    date_str = now.strftime("%Y-%m-%d")
+    timestamp_str = now.strftime("%H%M%S") + f"{now.microsecond // 1000:03d}"  # HHMMSS + milliseconds
+    
+    # Map QR type to directory name
+    type_map = {
+        "website": "website_information",
+        "contact": "contact_info"
+    }
+    type_str = type_map.get(qr_type, qr_type)
+    
+    # Create directory path with full timestamp for better organization
+    output_dir = Path("qr_codes") / f"{date_str}_{timestamp_str}_{type_str}"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Generate or use provided filename
+    if filename is None:
+        file_timestamp = now.strftime("%H%M%S") + f"{now.microsecond // 1000:03d}"  # HHMMSSmilliseconds
+        filename = f"qrcode_{file_timestamp}.png"
+    
+    return str(output_dir / filename)
+
+
 def generate_qr_code(data: str, output_path: str = None) -> None:
     """
     Generate a QR code from the given data and save it to a file.
@@ -147,7 +184,8 @@ def main():
             if not args.url:
                 print("Error: --url is required for website QR codes")
                 return
-            generate_qr_code(args.url, args.output)
+            output_path = args.output if args.output else get_organized_output_path("website")
+            generate_qr_code(args.url, output_path)
         
         elif args.type == "contact":
             if not all([args.name, args.phone, args.email]):
@@ -159,7 +197,7 @@ def main():
                 email=args.email,
                 url=args.website
             )
-            output_path = args.output if args.output else "contact_qrcode.png"
+            output_path = args.output if args.output else get_organized_output_path("contact")
             generate_qr_code(contact_vcard, output_path)
     
     # Otherwise, use interactive mode
@@ -167,7 +205,8 @@ def main():
         user_data = get_user_input_interactive()
         
         if user_data["type"] == "website":
-            generate_qr_code(user_data["url"], user_data.get("output"))
+            output_path = user_data.get("output") or get_organized_output_path("website")
+            generate_qr_code(user_data["url"], output_path)
         
         elif user_data["type"] == "contact":
             contact_vcard = generate_contact_vcard(
@@ -176,7 +215,7 @@ def main():
                 email=user_data["email"],
                 url=user_data["url"]
             )
-            output_path = user_data.get("output", "contact_qrcode.png")
+            output_path = user_data.get("output") or get_organized_output_path("contact")
             generate_qr_code(contact_vcard, output_path)
 
 

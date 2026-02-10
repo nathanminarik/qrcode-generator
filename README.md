@@ -21,11 +21,13 @@ A flexible Python utility for generating QR codes for websites and contact infor
 ### Setup
 
 1. Clone or download this repository:
+
 ```bash
 cd /Users/nathanaelminarik/Projects/utils/qrcode-generator
 ```
 
 2. Install required dependencies:
+
 ```bash
 pip install qrcode[pil]
 ```
@@ -41,6 +43,7 @@ python generator.py
 ```
 
 You'll see a menu:
+
 ```
 === QR Code Generator ===
 Choose an option:
@@ -48,7 +51,7 @@ Choose an option:
 2. Generate Contact QR Code
 3. Exit
 
-Enter your choice (1-3): 
+Enter your choice (1-3):
 ```
 
 #### Example: Interactive Website QR Code
@@ -63,8 +66,8 @@ Choose an option:
 3. Exit
 
 Enter your choice (1-3): 1
-Enter website URL: https://www.nathanminarik.com
-QR code saved to qrcode_20260210_124350.png
+Enter website URL: https://www.example.com
+QR code saved to qr_codes/2026-02-10_131331097_website_information/qrcode_131331097.png
 ```
 
 #### Example: Interactive Contact QR Code
@@ -80,11 +83,11 @@ Choose an option:
 
 Enter your choice (1-3): 2
 --- Enter Your Contact Information ---
-Full Name: Nathan Minarik
-Phone Number: 703.868.7182
-Email Address: nathanminarik@gmail.com
-Website URL (optional, press Enter to skip): https://www.nathanminarik.com
-QR code saved to contact_qrcode.png
+Full Name: Alice Johnson
+Phone Number: 555-123-4567
+Email Address: alice.johnson@example.com
+Website URL (optional, press Enter to skip): https://www.example.com
+QR code saved to qr_codes/2026-02-10_131331306_contact_info/qrcode_131331306.png
 ```
 
 ### 2. Command-Line Mode (For Automation & Scripting)
@@ -96,18 +99,19 @@ Use command-line arguments for programmatic access and automation.
 Generate a website QR code pointing to any URL:
 
 ```bash
-python generator.py --type website --url "https://www.nathanminarik.com"
+python generator.py --type website --url "https://www.example.com"
 ```
 
 Output:
+
 ```
-QR code saved to qrcode_20260210_124350.png
+QR code saved to qr_codes/2026-02-10_131331097_website_information/qrcode_131331097.png
 ```
 
 With custom output filename:
 
 ```bash
-python generator.py --type website --url "https://www.nathanminarik.com" --output my_website.png
+python generator.py --type website --url "https://www.example.com" --output my_website.png
 ```
 
 #### Contact QR Code via Command Line
@@ -116,26 +120,27 @@ Generate a contact QR code with complete contact information:
 
 ```bash
 python generator.py --type contact \
-  --name "Nathan Minarik" \
-  --phone "703.868.7182" \
-  --email "nathanminarik@gmail.com" \
-  --website "https://www.nathanminarik.com"
+  --name "Alice Johnson" \
+  --phone "555-123-4567" \
+  --email "alice.johnson@example.com" \
+  --website "https://www.example.com"
 ```
 
 Output:
+
 ```
-QR code saved to contact_qrcode.png
+QR code saved to qr_codes/2026-02-10_131331306_contact_info/qrcode_131331306.png
 ```
 
 With custom output filename:
 
 ```bash
 python generator.py --type contact \
-  --name "Nathan Minarik" \
-  --phone "703.868.7182" \
-  --email "nathanminarik@gmail.com" \
-  --website "https://www.nathanminarik.com" \
-  --output nathan_contact.png
+  --name "Alice Johnson" \
+  --phone "555-123-4567" \
+  --email "alice.johnson@example.com" \
+  --website "https://www.example.com" \
+  --output alice_contact.png
 ```
 
 #### Contact QR Code without Website (Optional Field)
@@ -159,10 +164,10 @@ generate_qr_code("https://www.example.com", "website_qr.png")
 
 # Generate a contact QR code
 vcard = generate_contact_vcard(
-    name="Nathan Minarik",
-    phone="703.868.7182",
-    email="nathanminarik@gmail.com",
-    url="https://www.nathanminarik.com"
+    name="Alice Johnson",
+    phone="555-123-4567",
+    email="alice.johnson@example.com",
+    url="https://www.example.com"
 )
 generate_qr_code(vcard, "contact_qr.png")
 ```
@@ -195,10 +200,12 @@ optional arguments:
 Generate a QR code from data and save it to a file.
 
 **Parameters:**
+
 - `data` (str): The data to encode in the QR code (URL or vCard string)
 - `output_path` (str, optional): File path where the QR code will be saved. If not provided, auto-generates filename with timestamp
 
 **Example:**
+
 ```python
 generate_qr_code("https://example.com", "my_qr.png")
 ```
@@ -208,23 +215,46 @@ generate_qr_code("https://example.com", "my_qr.png")
 Generate a vCard format string for contact information.
 
 **Parameters:**
+
 - `name` (str): Full name
-- `phone` (str): Phone number (e.g., "703.868.7182" or "+1-555-123-4567")
+- `phone` (str): Phone number (e.g., "555-123-4567" or "+1-555-123-4567")
 - `email` (str): Email address
 - `url` (str, optional): Website URL
 
 **Returns:** vCard formatted string suitable for QR encoding
 
 **Example:**
+
 ```python
 vcard = generate_contact_vcard(
-    name="Nathan Minarik",
-    phone="703.868.7182",
-    email="nathanminarik@gmail.com",
-    url="https://www.nathanminarik.com"
+    name="Alice Johnson",
+    phone="555-123-4567",
+    email="alice.johnson@example.com",
+    url="https://www.example.com"
 )
 print(vcard)
 ```
+
+## Output Organization
+
+QR codes are automatically organized into timestamped directories:
+
+```
+qr_codes/
+├── 2026-02-10_131331097_website_information/
+│   └── qrcode_131331097.png
+└── 2026-02-10_131331306_contact_info/
+    └── qrcode_131331306.png
+```
+
+**Directory naming:** `YYYY-MM-DD_HHMMSSmilliseconds_{type}`
+**File naming:** `qrcode_HHMMSSmilliseconds.png`
+
+This ensures QR codes are:
+
+- Chronologically organized by date
+- Timestamped to millisecond precision for unique identification
+- Grouped by type (website_information or contact_info)
 
 ## Testing
 
@@ -235,11 +265,13 @@ python -m unittest test_generator -v
 ```
 
 The test suite includes:
+
 - **vCard tests**: Format validation, field handling, special characters
 - **QR code tests**: File generation, custom paths, auto-timestamp paths, PNG validation
 - **Integration tests**: Real-world workflows
 
 Expected output:
+
 ```
 Ran 12 tests in 0.162s
 OK
@@ -248,12 +280,16 @@ OK
 ## Output Files
 
 ### Website QR Codes
-- Default name: `qrcode_YYYYMMDD_HHMMSS.png`
+
+- Directory: `qr_codes/YYYY-MM-DD_HHMMSSmilliseconds_website_information/`
+- File format: `qrcode_HHMMSSmilliseconds.png`
 - Custom name: Specify with `--output` flag
 - When scanned, directs users to the specified URL
 
 ### Contact QR Codes
-- Default name: `contact_qrcode.png`
+
+- Directory: `qr_codes/YYYY-MM-DD_HHMMSSmilliseconds_contact_info/`
+- File format: `qrcode_HHMMSSmilliseconds.png`
 - Custom name: Specify with `--output` flag
 - When scanned on a smartphone, prompts user to add contact with all provided information
 
@@ -277,18 +313,18 @@ python generator.py --type website --url "https://project2.com" --output project
 python generator.py --type website --url "https://project3.com" --output project3_qr.png
 ```
 
-### Generate Your Personal Card QR Code
+### Generate a Personal Contact Card QR Code
 
 ```bash
 python generator.py --type contact \
-  --name "Nathan Minarik" \
-  --phone "703.868.7182" \
-  --email "nathanminarik@gmail.com" \
-  --website "https://www.nathanminarik.com" \
-  --output nathanminarik_contact.png
+  --name "Alice Johnson" \
+  --phone "555-123-4567" \
+  --email "alice.johnson@example.com" \
+  --website "https://www.example.com" \
+  --output alice_contact.png
 ```
 
-Then print or display `nathanminarik_contact.png` on business cards or marketing materials!
+Then print or display `alice_contact.png` on business cards or marketing materials!
 
 ## File Structure
 
@@ -296,8 +332,11 @@ Then print or display `nathanminarik_contact.png` on business cards or marketing
 qrcode-generator/
 ├── generator.py           # Main QR code generator module
 ├── test_generator.py      # Unit tests
-├── README.md             # This file
-└── *.png                 # Generated QR code files
+├── README.md              # This file
+├── .gitignore             # Git ignore configuration
+└── qr_codes/              # Generated QR code files (organized by date/type)
+    ├── YYYY-MM-DD_HHMMSSmilliseconds_website_information/
+    └── YYYY-MM-DD_HHMMSSmilliseconds_contact_info/
 ```
 
 ## Use Cases
@@ -316,6 +355,7 @@ This project is open source and available for personal and commercial use.
 ## Support
 
 For issues or questions:
+
 1. Check that all dependencies are installed: `pip install qrcode[pil]`
 2. Run the test suite to ensure everything works: `python -m unittest test_generator -v`
 3. Verify your input data (URLs should include protocol, phone format should be valid)

@@ -41,6 +41,7 @@ htmlcov/
 .tox/
 
 # Generated QR codes
+qr_codes/
 *.png
 !example_*.png
 
